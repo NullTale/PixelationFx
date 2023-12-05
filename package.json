@@ -1,0 +1,25 @@
+{
+  "name": "www.nulltale.pixelation",
+  "displayName": "Pixelation",
+  "version": "1.0.0",
+  "unity": "2022.1",
+  "description": "Pixelation post effect for unity Urp",
+  "documentationUrl": "https://github.com/NullTale/PixelationFx",
+  "licensesUrl": "https://github.com/NullTale/PixelationFx/master/LICENSE.md",
+  "author": {
+    "name": "NullTale",
+    "email": "nulltale@gmail.com",
+    "url": "https://twitter.com/NullTale"
+  },
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "14.0.6"
+  },
+  "hideInEditor": false,
+  "samples": [
+      {
+          "displayName": "Sample Scene",
+          "description": "",
+          "path": "Samples~"
+      }
+    ]
+}
