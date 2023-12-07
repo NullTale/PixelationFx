@@ -1,5 +1,8 @@
 # PixelationFx
 
+[![Twitter](https://img.shields.io/badge/Follow-Twitter?logo=twitter&color=white)](https://twitter.com/NullTale)
+[![Boosty](https://img.shields.io/badge/Support-Boosty?logo=boosty&color=white)](https://boosty.to/nulltale)
+
 Pixelation post effect for Unity Urp </br>
 Controlled via volume profile, works as render feature
 
@@ -25,4 +28,4 @@ https://github.com/NullTale/PixelationFx.git
 Render feature contains a few global parameters</br>
 to control interpolation behavior</br>
 
-![image](https://github.com/NullTale/PixelationFx/assets/1497430/090dea57-c3f2-4a98-bb19-6a7f0dd9a9f0)
+![_demo](https://github.com/NullTale/PixelationFx/assets/1497430/9c5db29b-f910-4c09-a5ec-74afefa328a4)
