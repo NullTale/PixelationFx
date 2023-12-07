@@ -17,8 +17,10 @@ namespace VolFx
                 new Keyframe(1, 0.5095f, 3.6093f, 3.6093f, .1646f, .0f)
             });
         
-        [Range(0, 1)] [Tooltip("At what scale level the grid become visible")]
-        public float          _gridTreshold = 0.45f;
+        [Range(0, 1)] [Tooltip("At what scale level does the grid become visible")]
+        public float          _gridReveal = 0.45f;
+        [Tooltip("Grid impact discretization to reduce transition artifacts")]
+        public bool           _gridDiscrete = true;
         
         private bool               _posterLast;
         private PixelationVol.Grid _gridLast;
@@ -39,17 +41,33 @@ namespace VolFx
             
             _validateMat(mat, settings.m_Posterize.overrideState, settings.m_Type.value);
 
-            var val     = _scaleLerp.Evaluate(settings.m_Scale.value) * Screen.height;
+            var scale  = _scaleLerp.Evaluate(settings.m_Scale.value);
+            var height = _scaleLerp.Evaluate(settings.m_Scale.value) * Screen.height;
             var epsilon = 1f / (float)Screen.height;
-            if (val < epsilon)
-                val = epsilon;
+            if (height < epsilon)
+                height = epsilon;
             
-            var aspect  = Screen.width / (float)Screen.height;
-            var gridMul = settings.m_Type.value == PixelationVol.Grid.Square ? 1f : 1.4142f;
-            var pixels  = new Vector4(val * aspect, val, settings.m_Grid.value * .5f * gridMul, settings.m_Posterize.value);
+            var aspect    = Screen.width / (float)Screen.height;
+            var gridMul   = settings.m_Type.value == PixelationVol.Grid.Square ? 1f : 1.4142f;
+            var gridscale = settings.m_Grid.value * gridMul;
+            
+            if (_gridDiscrete)
+            {
+                var gridspace = 1f / Mathf.Floor(1f / scale);
+                if (gridscale % gridspace > gridspace * .5f)
+                    gridscale += gridspace - gridscale % gridspace;
+                else
+                    gridscale -= gridscale % gridspace;
+                
+                // do not override screen with black color if grid not zero
+                if (gridscale == 0f && settings.m_Grid.value > 0f)
+                    gridscale = gridspace;
+            }
+            
+            var pixels  = new Vector4(height * aspect, height, gridscale * .5f, settings.m_Posterize.value);
             
             mat.SetVector(s_Pixels, pixels);
-            mat.SetColor(s_Color, (val / Screen.height) < _gridTreshold ? settings.m_Color.value : Color.clear);
+            mat.SetColor(s_Color, (height / Screen.height) < _gridReveal ? settings.m_Color.value : Color.clear);
             return true;
         }
         
