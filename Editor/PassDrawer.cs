@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-//  OldMovieFx © NullTale - https://twitter.com/NullTale/
+//  Pixelation © NullTale - https://twitter.com/NullTale/
 namespace VolFx.Editor
 {
     [CustomPropertyDrawer(typeof(VolFx.Pass), true)]

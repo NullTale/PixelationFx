@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-//  VolFx © NullTale - https://twitter.com/NullTale/
+//  Pixelation © NullTale - https://twitter.com/NullTale/
 namespace VolFx.Editor
 {
     [CustomPropertyDrawer(typeof(CurveRangeAttribute))]

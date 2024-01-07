@@ -27,14 +27,18 @@ Shader "Hidden/Vol/Pixelation"
             #pragma fragment frag
  
             #pragma multi_compile_local _SQUARE _CIRCLE
+            #pragma multi_compile_local _ _CRISP
             #pragma multi_compile_local _ _POSTER
 
             sampler2D _MainTex;
 
             float4 _Pixels;     // x, y - desired resolution, z - gap, w - posterization
             float4 _Color;
-            //float4 _MainTex_TexelSize;
-
+            float  _Roundness;
+#ifdef _CRISP
+            float4 _MainTex_TexelSize;
+#endif
+            
             struct vert_in
             {
                 float4 vertex : POSITION;
@@ -55,17 +59,20 @@ Shader "Hidden/Vol/Pixelation"
             
             inline float2 uvSnap(float2 uv)
             {
+#ifdef _CRISP
+                float2 res = float2(round((uv.x - 0.5) * _Pixels.x) / _Pixels.x + 0.5, round((uv.y - 0.5) * _Pixels.y) / _Pixels.y + 0.5);
+
+                // snap pixel to the center of the main tex
+                res.x -= res.x % _MainTex_TexelSize.x;
+                res.x += _MainTex_TexelSize.x * .5;
+                
+                res.y -= res.y % _MainTex_TexelSize.y;
+                res.y += _MainTex_TexelSize.y * .5;
+
+                return res;
+#else
                 return float2(round((uv.x - 0.5) * _Pixels.x) / _Pixels.x + 0.5, round((uv.y - 0.5) * _Pixels.y) / _Pixels.y + 0.5);
-                // crisp test
-                // float2 res = float2(round((uv.x - 0.5) * _Pixels.x) / _Pixels.x + 0.5, round((uv.y - 0.5) * _Pixels.y) / _Pixels.y + 0.5);
-
-                // res.x -= res.x % _MainTex_TexelSize.x;
-                // res.x += _MainTex_TexelSize.x * .5;
-                //
-                // res.y -= res.y % _MainTex_TexelSize.y;
-                // res.y += _MainTex_TexelSize.y * .5;
-
-                // return res;
+#endif
             }
 
             frag_in vert(const vert_in v)
@@ -81,12 +88,7 @@ Shader "Hidden/Vol/Pixelation"
                 float2 snap   = uvSnap(i.uv);
                 float2 offset = abs(i.uv - snap) * _Pixels.xy;
                 half4 sample  = tex2D(_MainTex, snap);
-#ifdef _SQUARE
-                float val = max(offset.x, offset.y);
-#endif
-#ifdef _CIRCLE  
-                float val = length(offset);
-#endif
+
 #ifdef _POSTER
                 sample = pow(abs(sample), 0.4545);
                 float3 c = RgbToHsv(sample.xyz);
@@ -94,7 +96,8 @@ Shader "Hidden/Vol/Pixelation"
                 sample = float4(HsvToRgb(c), sample.a);
                 sample = pow(abs(sample), 2.1);
 #endif
-                return lerp(sample, half4(lerp(sample.rgb, _Color.rgb, _Color.a), sample.a), step(_Pixels.z, val));
+                float shape = 1 - step(length(offset), _Pixels.z * _Roundness) * step(max(offset.x, offset.y), _Pixels.z);
+                return lerp(sample, _Color, shape);
             }
             ENDHLSL
         }

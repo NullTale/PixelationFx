@@ -9,6 +9,7 @@ namespace VolFx
     {
         private static readonly int s_Pixels = Shader.PropertyToID("_Pixels");
         private static readonly int s_Color  = Shader.PropertyToID("_Color");
+        private static readonly int s_Roundness = Shader.PropertyToID("_Roundness");
         
         [CurveRange(0, .005f, 1, 1)] [Tooltip("Scale interpolation relative to the volume scale parameter")]
         public AnimationCurve _scaleLerp = new AnimationCurve(new Keyframe[]
@@ -21,10 +22,14 @@ namespace VolFx
         public float          _gridReveal = 0.45f;
         [Tooltip("Grid impact discretization to reduce transition artifacts")]
         public bool           _gridDiscrete = true;
+        [Tooltip("Pixelate without texture sampling, keep colors, but parts of the image may disappear")]
+        public bool           _crisp;
+        [Range(0, 1)] [Tooltip("Default roundness if override is not set, volume roundness can be used for volume interpolations")]
+        public float          _roundnessDefault = 1f;
         
-        private bool               _posterLast;
-        private PixelationVol.Grid _gridLast;
-        private bool               _firstRun;
+        private bool          _posterLast;
+        private bool          _crispLast;
+        private bool          _firstRun;
 
         // =======================================================================
         public override void Init()
@@ -39,7 +44,7 @@ namespace VolFx
             if (settings.IsActive() == false)
                 return false;
             
-            _validateMat(mat, settings.m_Posterize.overrideState, settings.m_Type.value);
+            _validateMat(mat, settings.m_Posterize.overrideState);
 
             var scale  = _scaleLerp.Evaluate(settings.m_Scale.value);
             var height = _scaleLerp.Evaluate(settings.m_Scale.value) * Screen.height;
@@ -47,8 +52,9 @@ namespace VolFx
             if (height < epsilon)
                 height = epsilon;
             
+            var roundness = settings.m_Roundness.overrideState ? settings.m_Roundness.value : _roundnessDefault;
             var aspect    = Screen.width / (float)Screen.height;
-            var gridMul   = settings.m_Type.value == PixelationVol.Grid.Square ? 1f : 1.4142f;
+            var gridMul   = Mathf.Lerp(1f, 1.4142f, roundness);
             var gridscale = settings.m_Grid.value * gridMul;
             
             if (_gridDiscrete)
@@ -64,14 +70,16 @@ namespace VolFx
                     gridscale = gridspace;
             }
             
-            var pixels  = new Vector4(height * aspect, height, gridscale * .5f, settings.m_Posterize.value);
+            var pixels = new Vector4(height * aspect, height, gridscale * .5f, settings.m_Posterize.value);
+            
             
             mat.SetVector(s_Pixels, pixels);
+            mat.SetFloat(s_Roundness, Mathf.Lerp(1.4142f, 1f, roundness));
             mat.SetColor(s_Color, (height / Screen.height) < _gridReveal ? settings.m_Color.value : Color.clear);
             return true;
         }
         
-        private void _validateMat(Material mat, bool poster, PixelationVol.Grid grid)
+        private void _validateMat(Material mat, bool poster)
         {
             if (_firstRun)
             {
@@ -79,7 +87,15 @@ namespace VolFx
                 _firstRun = false;
                 
                 poster = !_posterLast;
-                grid = _gridLast == PixelationVol.Grid.Circle ? PixelationVol.Grid.Square : PixelationVol.Grid.Circle;
+                _crisp = !_crispLast;
+            }
+            
+            if (_crispLast != _crisp)
+            {
+                _crispLast = _crisp;
+                
+                if (_crisp) mat.EnableKeyword("_CRISP");
+                else        mat.DisableKeyword("_CRISP");
             }
             
             if (_posterLast != poster)
@@ -88,26 +104,6 @@ namespace VolFx
                 
                 if (poster) mat.EnableKeyword("_POSTER");
                 else        mat.DisableKeyword("_POSTER");
-            }
-            
-            if (_gridLast != grid)
-            {
-                _gridLast = grid;
-                
-                mat.DisableKeyword("_CIRCLE");
-                mat.DisableKeyword("_SQUARE");
-                
-                switch (grid)
-                {
-                    case PixelationVol.Grid.Circle:
-                        mat.EnableKeyword("_CIRCLE");
-                        break;
-                    case PixelationVol.Grid.Square:
-                        mat.EnableKeyword("_SQUARE");
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(grid), grid, null);
-                }
             }
         }
     }
