@@ -26,6 +26,7 @@ https://github.com/NullTale/PixelationFx.git
 ```
 
 Render feature contains a few global parameters</br>
-to control interpolation behavior</br>
+to control interpolation behavior and some settings</br>
 
-![_demo](https://github.com/NullTale/PixelationFx/assets/1497430/9c5db29b-f910-4c09-a5ec-74afefa328a4)
+![_demo](https://github.com/NullTale/PixelationFx/assets/1497430/d698b113-8168-4d14-8f35-bc0f64a34a85)
+
