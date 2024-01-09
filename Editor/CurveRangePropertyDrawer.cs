@@ -1,3 +1,5 @@
+#if !VOL_FX
+
 using UnityEditor;
 using UnityEngine;
 
@@ -34,3 +36,5 @@ namespace VolFx.Editor
         }
     }
 }
+
+#endif

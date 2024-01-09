@@ -1,3 +1,5 @@
+#if !VOL_FX
+
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -49,3 +51,5 @@ namespace VolFx
         public static implicit operator RTHandle(RenderTarget rt) => rt.Handle;
     }
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if !VOL_FX
+
 using System;
 using UnityEngine;
 
@@ -27,3 +29,5 @@ namespace VolFx
         }
     }
 }
+
+#endif

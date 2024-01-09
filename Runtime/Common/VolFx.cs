@@ -1,3 +1,5 @@
+#if !VOL_FX
+
 using System;
 using System.IO;
 using System.Linq;
@@ -123,3 +125,4 @@ namespace VolFx
         }
     }
 }
+#endif

@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 //  Pixelation © NullTale - https://twitter.com/NullTale/
 namespace VolFx
 {
-    [Serializable, VolumeComponentMenu("Vol/Pixelation")]
+    [Serializable, VolumeComponentMenu("VolFx/Pixelation")]
     public sealed class PixelationVol : VolumeComponent, IPostProcessComponent
     {
         public ClampedFloatParameter         m_Scale     = new ClampedFloatParameter(1, 0, 1f);
