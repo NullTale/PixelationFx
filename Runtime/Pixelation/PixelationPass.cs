@@ -190,6 +190,9 @@ namespace VolFx
             var gridMul   = Mathf.Lerp(1f, 1.4142f, roundness);
             var gridscale = settings.m_Grid.value * gridMul;
             
+            // if (_crisp)
+            //     gridscale.
+            
             if (_gridDiscrete)
             {
                 var gridspace = 1f / Mathf.Floor(1f / scale);
