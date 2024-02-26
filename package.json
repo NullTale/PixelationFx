@@ -1,7 +1,7 @@
 {
   "name": "www.nulltale.pixelation",
   "displayName": "Pixelation",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "unity": "2022.1",
   "description": "Pixelation post effect for Unity Urp and VolFx",
   "author": {
