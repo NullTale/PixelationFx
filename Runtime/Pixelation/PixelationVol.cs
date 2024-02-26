@@ -13,10 +13,11 @@ namespace VolFx
         public NoInterpClampedFloatParameter m_Grid      = new NoInterpClampedFloatParameter(1f, 0, 1f);
         public ClampedFloatParameter         m_Roundness = new ClampedFloatParameter(.5f, 0f, 1f);
         public NoInterpColorParameter        m_Color     = new NoInterpColorParameter(Color.clear);
-        public ClampedIntParameter           m_Posterize = new ClampedIntParameter(64, 1, 64);
+        public Texture2DParameter            m_Palette  = new Texture2DParameter(null, false);
+        public ClampedFloatParameter         m_Impact   = new ClampedFloatParameter(0, 0, 1);
         
         // =======================================================================
-        public bool IsActive() => active && (m_Scale.value < 1 || m_Posterize.value < m_Posterize.max);
+        public bool IsActive() => active && (m_Scale.value < 1 || (m_Palette.value != null && m_Impact.value > 0f));
 
         public bool IsTileCompatible() => false;
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 //  Pixelation © NullTale - https://twitter.com/NullTale/
@@ -26,15 +27,19 @@ namespace VolFx
         public bool           _crisp;
         [Range(0, 1)] [Tooltip("Default roundness if override is not set, volume roundness can be used for volume interpolations")]
         public float          _roundnessDefault = 1f;
+        [Tooltip("Default palette texture")]
+        public Optional<Texture2D> _palette;
         
-        private bool          _posterLast;
-        private bool          _crispLast;
-        private bool          _firstRun;
+        private bool                             _paletteLast;
+        private bool                             _crispLast;
+        private bool                             _firstRun;
+        private Dictionary<Texture2D, Texture2D> _paletteCache = new Dictionary<Texture2D, Texture2D>();
 
         // =======================================================================
         public override void Init()
         {
             _firstRun = true;
+            _paletteCache.Clear();
         }
 
         public override bool Validate(Material mat)
@@ -44,7 +49,24 @@ namespace VolFx
             if (settings.IsActive() == false)
                 return false;
             
-            _validateMat(mat, settings.m_Posterize.overrideState);
+            // access the palette
+            var palette = settings.m_Palette.value as Texture2D;
+            if (palette == null)
+                palette = _palette.GetValueOrDefault();
+            
+            Texture2D paletteLut = null;
+            if (palette != null && _paletteCache.TryGetValue(palette, out paletteLut) == false)
+            {
+                paletteLut = LutGenerator.Generate(palette);
+                _paletteCache.Add(palette, paletteLut);
+            }
+            var usePalette = palette != null && settings.m_Impact.value > 0f;
+            if (usePalette)
+            {
+                mat.SetTexture("_LutTex", paletteLut);
+            }
+            
+            _validateMat(mat, usePalette, _crisp);
 
             var scale  = _scaleLerp.Evaluate(settings.m_Scale.value);
             var height = _scaleLerp.Evaluate(settings.m_Scale.value) * Screen.height;
@@ -70,7 +92,7 @@ namespace VolFx
                     gridscale = gridspace;
             }
             
-            var pixels = new Vector4(height * aspect, height, gridscale * .5f, settings.m_Posterize.value);
+            var pixels = new Vector4(height * aspect, height, gridscale * .5f, settings.m_Impact.value);
             
             
             mat.SetVector(s_Pixels, pixels);
@@ -78,19 +100,19 @@ namespace VolFx
             mat.SetColor(s_Color, (height / Screen.height) < _gridReveal ? settings.m_Color.value : Color.clear);
             return true;
         }
-        
-        private void _validateMat(Material mat, bool poster)
+         
+        private void _validateMat(Material mat, bool palette, bool crisp)
         {
             if (_firstRun)
             {
                 // always apply parameters if first run
                 _firstRun = false;
                 
-                poster = !_posterLast;
-                _crisp = !_crispLast;
+                palette = !_paletteLast;
+                crisp   = !_crispLast;
             }
             
-            if (_crispLast != _crisp)
+            if (_crispLast != crisp)
             {
                 _crispLast = _crisp;
                 
@@ -98,12 +120,12 @@ namespace VolFx
                 else        mat.DisableKeyword("_CRISP");
             }
             
-            if (_posterLast != poster)
+            if (_paletteLast != palette)
             { 
-                _posterLast = poster;
+                _paletteLast = palette;
                 
-                if (poster) mat.EnableKeyword("_POSTER");
-                else        mat.DisableKeyword("_POSTER");
+                if (palette) mat.EnableKeyword("_USE_PALETTE");
+                else        mat.DisableKeyword("_USE_PALETTE");
             }
         }
     }
