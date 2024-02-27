@@ -9,7 +9,7 @@ Controlled via volume profile, works as render feature
 
 ![_cover](https://github.com/NullTale/PixelationFx/assets/1497430/bae56685-73f5-4f0a-b87b-581ec462debd)
 
-Can use palettes blended with the original image
+3D pixelation with palettes (more pixelart [palettes](https://lospec.com/palette-list))
 
 ![_cover](https://github.com/NullTale/PixelationFx/assets/1497430/52071f6f-6e48-4d05-89ba-7a313a75ab0e)
 
