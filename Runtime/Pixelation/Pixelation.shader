@@ -2,7 +2,7 @@ Shader "Hidden/Vol/Pixelation"
 {
     Properties
     {
-		_Pixels("Pixels", Vector) = (1, 1, 0, 1)
+        _Pixels("Pixels", Vector) = (1, 1, 0, 1)
         _Color("Color", Color) = (0, 0, 0, 0)
     }
 
@@ -99,7 +99,7 @@ Shader "Hidden/Vol/Pixelation"
                 float3 lutColor = tex2D(tex, uv).rgb;
                 
 #if !defined(UNITY_COLORSPACE_GAMMA)
-                lutColor = float4(GetSRGBToLinear(lutColor.xyz), lutColor.w);
+                lutColor = GetSRGBToLinear(lutColor.xyz);
 #endif
 
                 return lutColor;
