@@ -7,11 +7,12 @@ using UnityEngine;
 namespace VolFx
 {
     [ShaderName("Hidden/Vol/Pixelation")]
-    public class PixelationPass : VolFx.Pass
+    public class PixelationPass : VolFxProc.Pass
     {
-        private static readonly int s_Pixels = Shader.PropertyToID("_Pixels");
-        private static readonly int s_Color  = Shader.PropertyToID("_Color");
+        private static readonly int s_Pixels    = Shader.PropertyToID("_Pixels");
+        private static readonly int s_Color     = Shader.PropertyToID("_Color");
         private static readonly int s_Roundness = Shader.PropertyToID("_Roundness");
+        private static readonly int s_LutTex    = Shader.PropertyToID("_LutTex");
         
         [CurveRange(0, .005f, 1, 1)] [Tooltip("Scale interpolation relative to the volume scale parameter")]
         public AnimationCurve _scaleLerp = new AnimationCurve(new Keyframe[]
@@ -31,11 +32,11 @@ namespace VolFx
         [Tooltip("Default palette texture")]
         public Optional<Texture2D> _palette;
         
-        private bool                             _paletteLast;
-        private bool                             _crispLast;
-        private bool                             _firstRun;
-        private Dictionary<Texture2D, Texture2D> _paletteCache = new Dictionary<Texture2D, Texture2D>();
-        
+        private                 bool                             _paletteLast;
+        private                 bool                             _crispLast;
+        private                 bool                             _firstRun;
+        private                 Dictionary<Texture2D, Texture2D> _paletteCache = new Dictionary<Texture2D, Texture2D>();
+
         // =======================================================================
         public static class LutGenerator
         {
@@ -174,7 +175,7 @@ namespace VolFx
             var usePalette = palette != null && settings.m_Impact.value > 0f;
             if (usePalette)
             {
-                mat.SetTexture("_LutTex", paletteLut);
+                mat.SetTexture(s_LutTex, paletteLut);
             }
             
             _validateMat(mat, usePalette, _crisp);

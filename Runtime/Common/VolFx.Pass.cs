@@ -10,7 +10,7 @@ using UnityEngine.Rendering.Universal;
 //  Pixelation © NullTale - https://twitter.com/NullTale/
 namespace VolFx
 {
-    public static class VolFx
+    public static class VolFxProc
     {
         [Serializable]
         public abstract class Pass : ScriptableObject
@@ -43,6 +43,9 @@ namespace VolFx
             internal void _init()
             {
 #if UNITY_EDITOR
+#if !UNITY_2022_1_OR_NEWER
+                Debug.LogError($"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name} require Unity 2022 or higher");
+#endif
                 if (_shader == null || _material == null)
                 {
                     var shaderName = GetType().GetCustomAttributes(typeof(ShaderNameAttribute), true).FirstOrDefault() as ShaderNameAttribute;
