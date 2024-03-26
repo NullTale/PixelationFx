@@ -14,7 +14,7 @@ Works as render feature or a pass for selective post processing [VolFx](https://
 ![_cover](https://github.com/NullTale/PixelationFx/assets/1497430/52071f6f-6e48-4d05-89ba-7a313a75ab0e)
 
 ## Part of Artwork Project
-All effects can work individually or as a part of [VolFx](https://github.com/NullTale/VolFx)
+
 * [Vhs](https://github.com/NullTale/VhsFx)
 * [OldMovie](https://github.com/NullTale/OldMovieFx)
 * [GradientMap](https://github.com/NullTale/GradientMapFilter)
