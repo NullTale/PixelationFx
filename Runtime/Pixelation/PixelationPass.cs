@@ -7,7 +7,7 @@ using UnityEngine;
 namespace VolFx
 {
     [ShaderName("Hidden/Vol/Pixelation")]
-    public class PixelationPass : VolFxProc.Pass
+    public class PixelationPass : VolFx.Pass
     {
         private static readonly int s_Pixels    = Shader.PropertyToID("_Pixels");
         private static readonly int s_Color     = Shader.PropertyToID("_Color");
