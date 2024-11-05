@@ -4,7 +4,8 @@
 [![Discord](https://img.shields.io/badge/Discord-Discord?logo=discord&color=white)](https://discord.gg/CkdQvtA5un)
 [![Asset Store](https://img.shields.io/badge/Asset%20Store-asd?logo=Unity&color=blue)](https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/271730)
 
-FOR NOT COMMERCIAL USE ONLY version is not supported and depricated, release available only in the [Asset Store](https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/271730) read a license
+FOR NOT COMMERCIAL USE ONLY, read a license </br>
+release available only on the [Asset Store](https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/271730)
 
 Pixelation post effect for Unity Urp, controlled via volume profile </br>
 Works as render feature or a pass for selective post processing [VolFx](https://github.com/NullTale/VolFx)
