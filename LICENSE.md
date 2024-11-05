@@ -1,9 +1,21 @@
-MIT License
+Copyright (c) 2023 NullTale</br>
+License for Non-Commercial Use with Author Attribution</br>
 
-Copyright (c) 2023 NullTale
+• For commercial use, consider purchasing a license from the [asset store](https://assetstore.unity.com/packages/tools/particles-effects/270928), or contact the author.</br>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+• This product cannot be used in any commercial projects or activities with monetization purposes.</br>
+• You may not sell, publish, or distribute the source code or any modifications of this product as your own.</br>
+• The source code cannot be used to create other tools, be ported to other engines, or included in any commercial product.</br>
+• Attribution ("Copyright (c) 2023 NullTale") must be retained in the final version of the product, including in executable or distributed forms.</br>
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+• You are free to use this product in non-commercial jam games, studies, and applications.</br>
+• You may tweak or modify the product for personal use, without the right to distribute.</br>
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+• Any violation of the terms of this license may result in legal consequences.</br>
+
+The software is provided "as is," without warranty of any kind, express or implied.</br>
+The author disclaims any responsibility for illegal use and is not liable for any consequences arising from such use.</br>
+
+ml: nulltale@gmail.com</br>
+sm: https://x.com/nulltale</br>
+ds: https://discord.gg/CkdQvtA5un</br>
