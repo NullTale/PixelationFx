@@ -148,6 +148,25 @@ namespace VolFx.Editor
             }
         }
         
+        [InitializeOnLoadMethod]
+        public static void CopyrightInfo()
+        {
+            var type = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name.Replace(".Editor", "");
+            var link = "https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/270015";
+            
+            var ssc = SessionState.GetInt($"CopyrightInfo_{type}_33", UnityEngine.Random.Range(3, 7 + 1));
+            SessionState.SetInt($"CopyrightInfo_{type}_33", ssc + 1);
+            
+            //if (SessionState.GetBool($"CopyrightInfo_{type}", false) == false || ssc == 33)
+            {
+                Debug.Log($"<color=white>• You are using a <b>Non-Commercial</b> version of <b>{type}</b> developed by <b>NullTale</b></color>.\n" +
+                          "When using this version, please remember to specify <b>Author Attribution</b> according to the <b>Licence</b> used.\n" +
+                          "------------- - - - -  -  -\n" +
+                          $"A full use <b>Licence</b> can be acquired on <a href=\"{link}\">Asset Store</a> or negotiated with the Author in cases of special licensing.\n \n");
+             
+                SessionState.SetBool($"CopyrightInfo_{type}", true);
+            }
+        }
     }
 }
 
