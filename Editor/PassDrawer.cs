@@ -157,7 +157,7 @@ namespace VolFx.Editor
             var ssc = SessionState.GetInt($"CopyrightInfo_{type}_33", UnityEngine.Random.Range(3, 7 + 1));
             SessionState.SetInt($"CopyrightInfo_{type}_33", ssc + 1);
             
-            if (SessionState.GetBool($"CopyrightInfo_{type}", false) == false || ssc == 33)
+            if (SessionState.GetBool($"CopyrightInfo_{type}", false) == false || ssc == 333)
             {
                 Debug.Log($"<color=white>• You are using a <b>Non-Commercial</b> version of <b>{type}</b> developed by <b>NullTale</b></color>.\n" +
                           "When using this version, please remember to specify <b>Author Attribution</b> according to the <b>Licence</b> used.\n" +
