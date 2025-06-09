@@ -5,6 +5,9 @@ Dev by NullTale<br>
 [![Tg](https://img.shields.io/badge/Tg-Telegram?logo=telegram&color=white)](https://t.me/nulltalescape)<br>
 [![Asset Store](https://img.shields.io/badge/Asset%20Store-asd?logo=Unity&color=blue)](https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/271730)
 
+FOR NON COMMERCIAL USE ONLY - version is no longer supported and cannot be used in commercial purposes
+read the license, official release only on the [AssetStore](https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/271730)
+
 Pixelation post effect for Unity Urp, controlled via volume profile </br>
 Works as render feature or a pass for selective post processing [VolFx](https://github.com/NullTale/VolFx)
 
